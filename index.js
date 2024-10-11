@@ -101,39 +101,67 @@ doc.image(chartImage, 320, 170, { width: 150, height: 75 });
 
    
   // Função para formatar o texto com valores
-function addTextWithValue(text, value, isFaturamentoOrRepasse = false) {
-    doc.moveDown().fontSize(12).fillColor('black').text(`${text}:`, { continued: true });
+function addTextWithValue(text, value, isFaturamentoOrRepasse = false, isImportant=false) {
+    if (isImportant) {
+        // Aumenta a fonte se for um texto importante (Faturamento ou Repasse)
+        doc.fontSize(18).fillColor('black').text(`${text}:`, { continued: true });
+      } else {
+        // Usa o tamanho de fonte padrão se não for importante
+        doc.fontSize(12).fillColor('black').text(`${text}:`, { continued: true });
+      }
     
     // Verifica se é Faturamento ou Repasse
     if (isFaturamentoOrRepasse) {
-        doc.fillColor('black').text(`${value}`, { align: 'right' }); // Alinha o valor à direita
+        doc.fillColor('black'). fontSize(15).text(`${value}`, { align: 'right' }); // Alinha o valor à direita
     } else {
         doc.fillColor('#D43F3F').text(`${value}`, { align: 'right' }); // Usa a cor vermelha para outros valores
     }
 }
 
 // Faturamento
-addTextWithValue('Faturamento', 'R$ 3.557,70', true); // Passa true para Faturamento
+addTextWithValue('Faturamento', 'R$ 3.557,70', true, true); // Passa true para Faturamento
 
 doc.moveDown(); // Adiciona uma linha em branco
 // Desenhar uma linha abaixo do texto em cinza
-const y = doc.y; // Posição vertical atual
+let y = 440; // Posição vertical atual
 doc.moveTo(50, y).lineTo(550, y).strokeColor('#D3D3D3').stroke(); // Desenha a linha
-doc.moveDown(); // Move para a próxima linha após a linha
-
+doc.moveDown(); // Adiciona uma linha em branco
+// Move o y manualmente para a próxima linha ou posição desejada
+y += 40; // Ajusta o valor de y 
 // Despesas (Taxas e Descontos)
 addTextWithValue('Taxa 360 Suítes', '- R$ 500,00');
+doc.moveTo(50, y).lineTo(550, y).strokeColor('#D3D3D3').stroke(); // Desenha a linha
+doc.moveDown(); // Adiciona uma linha em branco
+y += 35;
 addTextWithValue('Energia & Elétrica', '- R$ 125,00');
+doc.moveTo(50, y).lineTo(550, y).strokeColor('#D3D3D3').stroke(); // Desenha a linha
+doc.moveDown();
+y += 25;
 addTextWithValue('IPTU', '- R$ 104,28');
+doc.moveTo(50, y).lineTo(550, y).strokeColor('#D3D3D3').stroke(); // Desenha a linha
+doc.moveDown();
+y += 30;
 addTextWithValue('Internet', '- R$ 80,00');
+doc.moveTo(50, y).lineTo(550, y).strokeColor('#D3D3D3').stroke(); // Desenha a linha
+doc.moveDown();
+y += 30;
 addTextWithValue('Seguro Residencial', '- R$ 80,00');
+doc.moveTo(50, y).lineTo(550, y).strokeColor('#D3D3D3').stroke(); // Desenha a linha
+doc.moveDown();
+y += 30;
 addTextWithValue('Prov. Manutenção', '- R$ 80,00');
+doc.moveTo(50, y).lineTo(550, y).strokeColor('#D3D3D3').stroke(); // Desenha a linha
+doc.moveDown();
+y += 30;
 addTextWithValue('Outros', '- R$ 1.029,00');
+doc.moveTo(50, y).lineTo(550, y).strokeColor('#D3D3D3').stroke(); // Desenha a linha
+doc.moveDown();
+y += 40;
 
 doc.moveDown(); // Adiciona uma linha em branco
 
 // Valor de Repasse
-addTextWithValue('Valor de Repasse', 'R$ 1.100,60', true); // Passa true para Repasse
+addTextWithValue('Valor de Repasse', 'R$ 1.100,60', true, true); // Passa true para Repasse
 
   // Finalizar o PDF
   doc.end();
